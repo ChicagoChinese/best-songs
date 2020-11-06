@@ -2,15 +2,15 @@
 
 (import subprocess)
 (import json)
-(import [pathlib [Path]])
+(import [prelude [*]])
 
 (defn get-track-locations [playlist-name]
   (->
     ["swift" "track_paths.swift" playlist-name]
     (subprocess.check-output)
     (.decode "utf-8")
-    (.strip)
-    (.splitlines)))
+    .strip
+    .splitlines))
 
 (defn ffprobe-output-to-meta [d location]
   (let [
@@ -28,16 +28,12 @@
 (defn get-track-meta [location]
   (->
     ["ffprobe" location "-print_format" "json" "-show_format"]
-    (subprocess.check-output)
-    (json.loads)
+    subprocess.check-output
+    json.loads
     (ffprobe-output-to-meta location)))
-
-(defn spit [location text]
-  (let [path (Path location)]
-    (.write-text path text)))
 
 (->>
   (map get-track-meta (get-track-locations "Best of 2020"))
-  (list)
+  list
   (json.dumps :indent 2 :ensure-ascii False)
   (spit "tracks.json"))
