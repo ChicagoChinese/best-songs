@@ -1,5 +1,5 @@
 (import hanzidentifier)
-(import chinese_converter)
+(import chinese-converter)
 
 (setv text "\
 作詞/曲：福祿壽FloruitShow
@@ -58,7 +58,7 @@
 ")
 
 ; (print (.strip text))
-(unless (hanzidentifier.is_simplified text)
+(unless (hanzidentifier.is-simplified text)
   (print "Detected non-simplified text, converting...")
-  (print (chinese_converter.to_simplified text))
+  (print (chinese-converter.to-simplified text))
 )

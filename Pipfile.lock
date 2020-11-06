@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1848a037530ec430f6e86039f8a535a4e08463596ebc718f6bee7e5dc7ac666f"
+            "sha256": "4bea790e81389d45b83846f808aa8bdad47cd547bc000d257b4fe5493e8374ce"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -44,7 +44,7 @@
                 "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b",
                 "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
+            "index": "pypi",
             "version": "==0.4.4"
         },
         "funcparserlib": {

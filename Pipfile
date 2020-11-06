@@ -9,6 +9,7 @@ verify_ssl = true
 hy = "*"
 hanzidentifier = "*"
 chinese-converter = "*"
+colorama = "*"
 
 [requires]
 python_version = "3.8"
