@@ -1,9 +1,8 @@
+(require [hy.contrib.walk [let]])
+
 (import subprocess)
 (import json)
 (import [pathlib [Path]])
-
-(require [hy.contrib.walk [let]])
-
 
 (defn get-track-locations [playlist-name]
   (->

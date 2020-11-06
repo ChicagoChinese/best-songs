@@ -1,10 +1,10 @@
+(require [hy.contrib.walk [let]])
+
 (import json)
 (import [pathlib [Path]])
 (import hanzidentifier)
 (import chinese-converter)
-
-(require [hy.contrib.walk [let]])
-
+(import [colorama [Fore Style]])
 
 (defn get-text-chunk [meta]
   (->>
@@ -16,7 +16,7 @@
     ]
     (.join "\n")))
 
-(as-> (Path "tracks.json") it
+(setv items (as-> (Path "tracks.json") it
   (.read_text it)
   (json.loads it)
   (lfor
@@ -25,8 +25,13 @@
       [chunk (get-text-chunk m)]
       (if (hanzidentifier.is-simplified chunk)
         (continue)
-        (do
-          (assoc m "chunk" (-> m get-text-chunk chinese-converter.to-simplified))
-          m)))
-    m)
-  (print it))
+        (assoc m "chunk" (-> m get-text-chunk chinese-converter.to-simplified))))
+    m)))
+
+(when (len items)
+  (print f"{Fore.YELLOW}There are {(len items)} tracks that seem to contain traditional characters:")
+  (for [[i item] (enumerate items 1)]
+    ; can't use let macro here
+    (setv title (get item "title"))
+    (print f"{i}. {title}")))
+
