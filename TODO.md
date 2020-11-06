@@ -1,0 +1,2 @@
+- Detect traditional characters and generate simplified text
+- Generate list of most popular words

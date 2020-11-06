@@ -4,6 +4,7 @@
 
 (require [hy.contrib.walk [let]])
 
+
 (defn get-track-locations [playlist-name]
   (->
     ["swift" "track_paths.swift" playlist-name]
@@ -21,6 +22,7 @@
       "artist" (gett "artist")
       "link" (gett "comment")
       "genre" (gett "genre")
+      "lyrics" (.replace (gett "lyrics") "\r" "\n")
       "location" location
     }))
 
