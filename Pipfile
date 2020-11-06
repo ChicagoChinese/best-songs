@@ -10,6 +10,7 @@ hy = "*"
 hanzidentifier = "*"
 chinese-converter = "*"
 colorama = "*"
+jinja2 = "*"
 
 [requires]
 python_version = "3.8"
