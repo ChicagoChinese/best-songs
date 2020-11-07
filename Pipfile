@@ -8,9 +8,9 @@ verify_ssl = true
 [packages]
 hy = "*"
 hanzidentifier = "*"
-chinese-converter = "*"
 colorama = "*"
 jinja2 = "*"
+hanziconv = "*"
 
 [requires]
 python_version = "3.8"

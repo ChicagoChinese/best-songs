@@ -3,7 +3,7 @@
 (import json)
 (import [pathlib [Path]])
 (import [hanzidentifier :as hi])
-(import chinese-converter)
+(import [hanziconv [HanziConv]])
 (import [colorama [Fore Style]])
 (import [jinja2 [Environment FileSystemLoader]])
 (import [prelude [*]])
@@ -30,7 +30,6 @@
 
 (defn text-contains-traditional [text]
   (let [choices [hi.TRADITIONAL hi.MIXED hi.BOTH]]
-    (print (repr text))
     (in (hi.identify text) choices)))
 
 (setv items
@@ -42,15 +41,14 @@
       :do (let
         [chunk (get-text-chunk item)]
         (if (text-contains-traditional chunk)
-          (assoc item "simplified" (-> chunk chinese-converter.to-simplified .splitlines))
+          (assoc item "simplified" (-> chunk HanziConv.toSimplified .splitlines))
           (continue)))
       item)))
 
 (when (len items)
   (print f"{Fore.YELLOW}There are {(len items)} tracks that seem to contain traditional characters:\n")
   (for [[i item] (enumerate items 1)]
-    ; must use setv when using f-string
-    (setv title (get item "title"))
+    (setv title (get item "title"))  ; must use setv when using f-string
     (print f"{i}. {title}"))
   (print Style.RESET_ALL)
   (generate-report items))
