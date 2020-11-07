@@ -11,6 +11,7 @@ hanzidentifier = "*"
 colorama = "*"
 jinja2 = "*"
 hanziconv = "*"
+jieba = "*"
 
 [requires]
 python_version = "3.8"
