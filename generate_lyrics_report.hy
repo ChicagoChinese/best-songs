@@ -2,7 +2,7 @@
 
 (import json)
 (import [pathlib [Path]])
-(import hanzidentifier)
+(import [hanzidentifier :as hi])
 (import chinese-converter)
 (import [colorama [Fore Style]])
 (import [jinja2 [Environment FileSystemLoader]])
@@ -11,13 +11,13 @@
 (setv env (Environment :loader (FileSystemLoader "templates")))
 (setv lyrics-report-file "lyrics_report.html")
 
-(defn get-text-chunk [meta]
+(defn get-text-chunk [item]
   (->>
     [
-      (get meta "title")
-      (get meta "artist")
+      (get item "title")
+      (get item "artist")
       ""
-      (get meta "lyrics")
+      (get item "lyrics")
     ]
     (.join "\n")))
 
@@ -28,17 +28,23 @@
     (spit lyrics-report-file)
   (print f"Generated {lyrics-report-file}")))
 
-(setv items (as-> (Path "tracks.json") it
-  (.read_text it)
-  (json.loads it)
-  (lfor
-    m it
-    :do (let
-      [chunk (get-text-chunk m)]
-      (if (hanzidentifier.is-simplified chunk)
-        (continue)
-        (assoc m "simplified" (-> m get-text-chunk chinese-converter.to-simplified .splitlines))))
-    m)))
+(defn text-contains-traditional [text]
+  (let [choices [hi.TRADITIONAL hi.MIXED hi.BOTH]]
+    (print (repr text))
+    (in (hi.identify text) choices)))
+
+(setv items
+  (as-> (Path "tracks.json") it
+    (.read_text it)
+    (json.loads it)
+    (lfor
+      item it
+      :do (let
+        [chunk (get-text-chunk item)]
+        (if (text-contains-traditional chunk)
+          (assoc item "simplified" (-> chunk chinese-converter.to-simplified .splitlines))
+          (continue)))
+      item)))
 
 (when (len items)
   (print f"{Fore.YELLOW}There are {(len items)} tracks that seem to contain traditional characters:\n")

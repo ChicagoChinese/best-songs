@@ -1,64 +1,17 @@
-(import hanzidentifier)
+(import [hanzidentifier :as hi])
 (import chinese-converter)
 
-(setv text "\
-作詞/曲：福祿壽FloruitShow
-
-風吹亂了她的頭髮
-也把她影子拉扯散啦
-多想也把我帶著走啊
-就算虛度也不怕
-她說我心裡有個寶啊
-千萬別把它給毀啦
-所以和風一起飛的我啊
-不需要把腳落下
-
-起風啦
-該回去啦
-你看 你看
-所有過往都在這兒呢
-大世界 它耀眼嗎
-只是 只是我
-再也找不到你了
-
-風吹皺了她的手啊
-還想她拉著我慢慢走啊
-走到溫暖金黃色的舊日子裡啊
-那時我天不怕地也不怕
-
-起風啦
-該回去啦
-你看 你看
-所有過往都在這兒呢
-
-大世界 我也會去呀
-等著 等著
-我走完這段路就來了
-
-她的茉莉花我還在喝著
-她聽的歌我還在唱著呢
-直到她的苦衷變成了我的
-她的仁慈也變成我的了
-
-起風啦（Woo～）
-起風啦（Woo～）
-
-你會不會披星戴月
-乘風破浪來我夢裡
-
-風吹亂了我的頭髮
-我知道你在這兒呢
-下次在春光中見到你啊
-千萬別再 拋下我啦
-
-你會不會披星戴月
-乘風破浪來我夢裡
-
----轉自福祿壽FloruitShow樂團 無商業用途  純好歌分享---
-")
+(setv text "作曲：嘟嘟\n作词：嘟嘟\n编曲：嘟嘟\n===\n\n摇晃水平景色骤变 风华瞬间狼狈\n采集信任让谎破灭\n保持平衡视线准确 一切认知崩溃\n重塑我的先天条件\n\n请说吧 我忏悔\nI'll tell you I'm in paradise\n无所谓 我无所谓\nI'll lead you to my paradise\n一瞬间所有的净水 都变成我干涸的血\nNow we gonna call that ''home''\n\n就往身上貼满标签 你送我的标签\n和最自豪的那双眼\n就往身上喷上香味 藏好自己的低贱\n你说不对那就不对\n\n请说吧 我忏悔\nI'll tell you I'm in paradise\n无所谓 都无所谓\nI'll lead you to my paradise\n一瞬间所有的净水 都变成我干涸的血\nNow we gonna call that ''home''\n\n请说吧 我忏悔\nI'll tell you I'm in paradise\n无所谓 都无所谓\nI'll lead you to my paradise\n就投下吧 你的自以为\n在饥饿以前让我再说 最后一次说\nNow we gonna call that “home”")
 
 ; (print (.strip text))
-(unless (hanzidentifier.is-simplified text)
-  (print "Detected non-simplified text, converting...")
-  (print (chinese-converter.to-simplified text))
-)
+(setv id-code (hi.identify text))
+(print "Identification code:" id-code)
+
+(if (in id-code [hi.TRADITIONAL hi.MIXED hi.BOTH])
+  (do
+    (print "Detected non-simplified text, converting...")
+    (for [line (.splitlines text)]
+      (setv new-line (chinese-converter.to-simplified line))
+      (print (hi.identify new-line) new-line)))
+    ; (print (chinese-converter.to-simplified text)))
+  (print "Text doesn't contain traditional characters"))
