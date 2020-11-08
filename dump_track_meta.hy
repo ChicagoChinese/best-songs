@@ -32,8 +32,9 @@
     json.loads
     (ffprobe-output-to-meta location)))
 
-(->>
-  (map get-track-meta (get-track-locations "Best of 2020"))
-  list
-  (json.dumps :indent 2 :ensure-ascii False)
-  (spit "tracks.json"))
+(defmain []
+  (->>
+    (map get-track-meta (get-track-locations "Best of 2020"))
+    list
+    (json.dumps :indent 2 :ensure-ascii False)
+    (spit "tracks.json")))

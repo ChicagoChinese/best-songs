@@ -18,5 +18,6 @@
         (update counter word inc)))
     counter))
 
-(for [[word count] (.most_common counter 100)]
-  (print word count))
+(defmain []
+  (for [[word count] (.most_common counter 100)]
+    (print word count)))
