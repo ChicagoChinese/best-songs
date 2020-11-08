@@ -32,7 +32,7 @@
     json.loads
     (ffprobe-output-to-meta location)))
 
-(defmain []
+(defn main []
   (->>
     (map get-track-meta (get-track-locations "Best of 2020"))
     list

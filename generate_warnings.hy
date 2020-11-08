@@ -76,6 +76,6 @@
           artist (get track "artist"))
         (print f"{i}. {artist}  {title}")))))
 
-(defmain []
+(defn main []
   (check-for-simplified tracks)
   (check-for-youtube-links tracks))

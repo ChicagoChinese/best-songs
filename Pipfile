@@ -12,6 +12,7 @@ colorama = "*"
 jinja2 = "*"
 hanziconv = "*"
 jieba = "*"
+invoke = "*"
 
 [requires]
 python_version = "3.8"
