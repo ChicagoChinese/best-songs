@@ -1,2 +1,3 @@
-- Detect traditional characters and generate simplified text
-- Generate list of most popular words
+# TODO
+
+- Exclude trivial words from word list

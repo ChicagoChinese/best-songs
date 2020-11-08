@@ -1,6 +1,7 @@
 (import json)
 (import [pathlib [Path]])
 (import [collections [Counter]])
+(import [prelude [*]])
 (import jieba)
 
 (setv lyrics-iter
@@ -9,6 +10,13 @@
     (json.loads it)
     (gfor item it (get item "lyrics"))))
 
-(print (list lyrics-iter))
-; (setv seg-list (list (jieba.cut "我来到北京清华大学" :cut-all True)))
-; (print (list seg-list))
+(setv counter
+  (do
+    (setv counter (Counter))
+    (for [text lyrics-iter]
+      (for [word (jieba.cut text :cut-all True)]
+        (update counter word inc)))
+    counter))
+
+(for [[word count] (.most_common counter 100)]
+  (print word count))
