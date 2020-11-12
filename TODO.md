@@ -1,5 +1,6 @@
 # TODO
 
-- Install invoke and add tasks.py
 - Add task for converting tracks that don't have youtube links to .mp4 format
-- Exclude trivial words from word list
+- Exclude stop words from word list
+- Generate page with links to all songs
+- Add task to create zip file containing all track files
