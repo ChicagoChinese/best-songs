@@ -2,12 +2,12 @@ import hy
 from invoke import task
 
 @task
-def dump(ctx):
+def dump(ctx, playlist_name):
     """
     Dump track metadata
     """
     from dump_track_meta import main
-    main()
+    main(playlist_name)
 
 @task
 def warnings(ctx):

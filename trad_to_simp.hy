@@ -1,7 +1,14 @@
+; From  https://github.com/tsroten/hanzidentifier/blob/develop/hanzidentifier.py#L9
+; UNKNOWN = 0
+; TRAD = TRADITIONAL = 1
+; SIMP = SIMPLIFIED = 2
+; BOTH = 3
+; MIXED = 4
+
 (import [hanzidentifier :as hi])
 (import [hanziconv [HanziConv]])
 
-(setv text "词曲：持修\n编曲：持修\n\n到底为什么 你会闯入我的世界\n你抱着我 看着我 对我说\n我们之间 有好多 都相同\n\n其实我跟大家一样虚伪\n宁可欺骗你 也不让 自己受伤\n其实我跟大家一样恶劣\n只想快乐却 又不敢 承担悲伤\n是个废物\n是个废物\n你跟我才不一样呢\n\n你抱着我 看着我 对我说\n我们之间 有好多 都相同\n你是如此完美(⁎⁍̴̛ᴗ⁍̴̛⁎)\n\n其实我跟大家一样虚伪\n宁可欺骗你 也不让 自己受伤\n其实我跟大家一样恶劣\n只想快乐却 又不敢 承担悲伤\n是个废物\n是个废物\n你跟我才不一样呢")
+(setv text "词曲Lyricist & Composer：Yider（伊德尔）\n制作人Producer: Yider（伊德尔）\n编曲Arrangement: Yider（伊德尔）\n附加制作Additional Production: Radiax杨博文\n人声採样Vocal sampling: AK郭采洁\n马头琴Moriinhuur: Yider（伊德尔）\n专辑录音室Recording Studio: 录顶技Studio\n录音工程师Recording Studio Engineers: 一丁Yiding/潇意\n录音师助理Recording Assistant: 孙少天\n混音工程师Engineer of Mixing: Radiax杨博文\n母带后期处理录音室Mastering Studio: Metropolis studio（UK）\n母带后期处理工程师Mastering Engineer: John Davis（UK）\n===\n\nYellow wall and empty eyes\n虚迷的阻碍 空洞的眼\nI loose my mind\n我迷失我自己\nIn the world and empty eyes\n在这世界 和空洞的眼\nI’ve put my past behind\n我丢失了过去\n（蒙语）nig​ ​hoyor​ ​gorov​ ​taav​ ​dolloo​ 24 hours\n(1 2 3 5 7 24hours)\n12357 24小时\n（蒙语）mini hosher nigen uuder​ 48 hours\n(I hope to have one day 48hours)\n我希望一天有48小时")
 
 ; (print (.strip text))
 (setv id-code (hi.identify text))
