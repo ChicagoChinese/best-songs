@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Best Tracks Page</title>
+  <style>
+    body {
+      font-size: 14px;
+      font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <ol>
+  {% for item in items %}
+    <li>
+      <a href="{{ item.link }}">{{ item.title }}</a> by {{ item.artist }}
+    </li>
+  {% endfor %}
+  </ol>
+</body>
+</html>
