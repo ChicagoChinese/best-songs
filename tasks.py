@@ -32,3 +32,11 @@ def page(ctx):
     """
     from generate_page import main
     main()
+
+@task
+def zip(ctx):
+    """
+    Generate ZIP file containing first 50 track files
+    """
+    from generate_zip import main
+    main()
