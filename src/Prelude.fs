@@ -14,7 +14,9 @@ let getCommandOutput command args =
 module Track =
   type Link =
     | YouTube of string
+    | YouTubeLong of string
     | Other of string
+    | None
 
   type T = {
     title: string
