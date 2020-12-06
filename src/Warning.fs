@@ -17,9 +17,22 @@ let main () =
     | 0 -> Console.WriteLine("No carriage returns detected!", Color.Green)
     | n ->
         let mesg =
-            sprintf "There are %d tracks whose lyrics have carriage returns"
+            sprintf "\nThere are %d tracks whose lyrics have carriage returns"
 
         Console.WriteLine(mesg, Color.Yellow)
 
-// for track in tracks do
-//     printfn "%s" track.Title
+    let badLinkTracks =
+        [| for track in tracks do
+            match track.Link with
+            | Link.YouTube _ -> ()
+            | _ -> yield track |]
+
+    match badLinkTracks.Length with
+    | 0 -> Console.WriteLine("All tracks have good youtube links!")
+    | n ->
+        let mesg =
+            sprintf "\nThere are %d tracks with bad links:" n
+
+        Console.WriteLine(mesg, Color.Yellow)
+        for track in badLinkTracks do
+            printfn "- %s by %s -> %s" track.Title track.Artist (Link.show track.Link)

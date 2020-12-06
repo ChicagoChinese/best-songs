@@ -9,10 +9,10 @@ type FfprobeMeta =
 {
   "format": {
     "tags": {
-      "title": "",
-      "artist": "",
-      "genre": "",
-      "lyrics": "",
+      "title": "STRING",
+      "artist": "STRING",
+      "genre": "STRING",
+      "lyrics": "STRING",
       "comment": "https://example.com/hello/"
     }
   }
@@ -38,26 +38,26 @@ let getTrackMeta location =
 let parseLink (text: string) =
     let lines = text.Split "\n"
     match lines.Length with
-    | 0 -> Track.None
+    | 0 -> Link.None
     | _ ->
         match lines
               |> Array.tryFind (fun line -> line.StartsWith "https://youtu.be") with
-        | Some link -> Track.YouTube link
+        | Some link -> Link.YouTube link
         | None ->
             match lines
                   |> Array.tryFind (fun line -> line.StartsWith "https://www.youtube.com") with
-            | Some link -> Track.YouTubeLong link
-            | None -> Track.Other(lines |> Array.tryHead |> Option.defaultValue "")
+            | Some link -> Link.YouTubeLong link
+            | None -> Link.Other(lines |> Array.tryHead |> Option.defaultValue "")
 
 let getTrack location =
     let meta = getTrackMeta location
     let tags = meta.Format.Tags
     { Location = location
-      Title = tags.Title.ToString()
-      Artist = tags.Artist.ToString()
-      Genre = tags.Genre.ToString()
-      Lyrics = tags.Lyrics.ToString()
-      Link = parseLink (tags.Comment.ToString()) }: Track.T
+      Title = tags.Title
+      Artist = tags.Artist
+      Genre = tags.Genre
+      Lyrics = tags.Lyrics
+      Link = parseLink tags.Comment }: Track.T
 
 let main playlistName =
     printfn "Dumping track metadata for playlist '%s'\n" playlistName

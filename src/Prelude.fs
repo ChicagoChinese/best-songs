@@ -13,19 +13,27 @@ let getCommandOutput command args =
 
     result.Result.Output.Trim()
 
-module Track =
-    let filename = "tracks.json"
-
-    type Link =
+module Link =
+    type T =
         | YouTube of string
         | YouTubeLong of string
         | Other of string
         | None
 
+    let show t =
+        match t with
+        | YouTube s
+        | YouTubeLong s
+        | Other s -> s
+        | None -> "no link"
+
+module Track =
+    let filename = "tracks.json"
+
     type T =
         { Title: string
           Artist: string
-          Link: Link
+          Link: Link.T
           Genre: string
           Lyrics: string
           Location: string }
