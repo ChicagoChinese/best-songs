@@ -4,6 +4,8 @@ open System.Drawing
 open Prelude
 open Colorful
 
+module H = Hanzidentifier
+
 let filename = "lyrics_report.html"
 
 let main () =
@@ -11,13 +13,13 @@ let main () =
 
     let crTracks =
         [| for track in tracks do
-            if track.Lyrics.Contains('\r') then track |]
+            if track.Lyrics.Contains("\r\n") then track |]
 
     match crTracks.Length with
     | 0 -> Console.WriteLine("No carriage returns detected!", Color.Green)
     | n ->
         let mesg =
-            sprintf "\nThere are %d tracks whose lyrics have carriage returns"
+            sprintf "\nThere are %d tracks whose lyrics have carriage returns" n
 
         Console.WriteLine(mesg, Color.Yellow)
 
@@ -36,3 +38,20 @@ let main () =
         Console.WriteLine(mesg, Color.Yellow)
         for track in badLinkTracks do
             printfn "- %s by %s -> %s" track.Title track.Artist (Link.show track.Link)
+
+    let tradTracks =
+        [| for track in tracks do
+            match H.identify track.Lyrics with
+            | H.Traditional
+            | H.Mixed -> yield track
+            | _ -> () |]
+
+    match tradTracks.Length with
+    | 0 -> Console.WriteLine("All tracks have simplified lyrics!", Color.Green)
+    | n ->
+        let mesg =
+            sprintf "\nThere are %d tracks with traditional lyrics" n
+
+        Console.WriteLine(mesg, Color.Yellow)
+        for track in tradTracks do
+            printfn "- %s by %s" track.Title track.Artist

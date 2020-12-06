@@ -8,8 +8,8 @@
   <ItemGroup>
     <Compile Include="src/Prelude.fs" />
     <Compile Include="src/Dump.fs" />
+    <Compile Include="src/Hanzidentifier.fs" />
     <Compile Include="src/Warning.fs" />
-    <Compile Include="src/library/Hanzidentifier.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>
   <ItemGroup>
