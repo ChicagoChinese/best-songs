@@ -4,6 +4,8 @@
 /packages
 /obj
 /bin
+/.ionide
+/.fake
 
 # Generated files
 /*.json
