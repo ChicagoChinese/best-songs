@@ -10,3 +10,23 @@ let getCommandOutput command args =
     |> CreateProcess.ensureExitCode
     |> Proc.run
   result.Result.Output.Trim()
+
+module Track =
+  type Link =
+    | YouTube of string
+    | Other of string
+
+  type T = {
+    title: string
+    artist: string
+    link: Link
+    genre: string
+    lyrics: string
+    location: string
+  }
+
+  let parse json =
+    Json.deserialize<T> json
+
+  let serializeTracks (tracks: T array) =
+    Json.serialize tracks

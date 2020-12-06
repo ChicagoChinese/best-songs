@@ -1,5 +1,6 @@
 module Dump
 
+open System.IO
 open FSharp.Data
 open Prelude
 
@@ -22,14 +23,27 @@ let getTrackLocations playlistName =
 
 let getTrackMetaJson location =
   getCommandOutput "ffprobe" [location; "-print_format"; "json"; "-show_format"]
-  |> FfprobeMeta.Parse
-  |> fun obj -> obj.Format.Tags
+
+let getTrackMeta location =
+  getTrackMetaJson location |> FfprobeMeta.Parse
+
+let getTrack location =
+  let meta = getTrackMeta location
+  let tags = meta.Format.Tags
+  {
+    location = location
+    title = tags.Title.ToString()
+    artist = tags.Artist.ToString()
+    genre = tags.Genre.ToString()
+    lyrics = tags.Lyrics.ToString()
+    link = Track.Other (tags.Comment.ToString())
+  } : Track.T
 
 let main playlistName =
   printfn "Dumping track metadata for playlist '%s'\n" playlistName
-  // printfn "%A" (getTrackLocations playlistName)
-  let tracks =
-    getTrackLocations playlistName
-    |> Array.map getTrackMetaJson
-  for track in tracks do
-    printfn "%A" track
+  getTrackLocations playlistName
+  |> Array.map getTrack
+  |> Track.serializeTracks
+  |> fun json -> File.WriteAllText("tracks.json", json)
+
+  printfn "Generated tracks.json"
