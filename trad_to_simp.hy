@@ -8,7 +8,7 @@
 (import [hanzidentifier :as hi])
 (import [hanziconv [HanziConv]])
 
-(setv text "词曲Lyricist & Composer：Yider（伊德尔）\n制作人Producer: Yider（伊德尔）\n编曲Arrangement: Yider（伊德尔）\n附加制作Additional Production: Radiax杨博文\n人声採样Vocal sampling: AK郭采洁\n马头琴Moriinhuur: Yider（伊德尔）\n专辑录音室Recording Studio: 录顶技Studio\n录音工程师Recording Studio Engineers: 一丁Yiding/潇意\n录音师助理Recording Assistant: 孙少天\n混音工程师Engineer of Mixing: Radiax杨博文\n母带后期处理录音室Mastering Studio: Metropolis studio（UK）\n母带后期处理工程师Mastering Engineer: John Davis（UK）\n===\n\nYellow wall and empty eyes\n虚迷的阻碍 空洞的眼\nI loose my mind\n我迷失我自己\nIn the world and empty eyes\n在这世界 和空洞的眼\nI’ve put my past behind\n我丢失了过去\n（蒙语）nig​ ​hoyor​ ​gorov​ ​taav​ ​dolloo​ 24 hours\n(1 2 3 5 7 24hours)\n12357 24小时\n（蒙语）mini hosher nigen uuder​ 48 hours\n(I hope to have one day 48hours)\n我希望一天有48小时")
+(setv text "109台湾原创_客语组【首奖】_望 Mong _邱淑蝉 Chiu shu-chan\n附註：\n平安顺事：歌词创作，意指平安顺序。\n客语歌词校正：王兴宝呀\n===\n\n你这只细妹仔 煞勐读书 下二摆正嫁得着好老公\n你这只细妹仔 爱勤俭 下二摆正寻得着好头路\n你这只细妹仔 命靓靓 像着亻厓 像着亻厓\n你这只细妹仔 爱有样式 下二摆正会得人惜\n你这只细妹仔 生到恁靓 系么人个妹仔啊\n你这只细妹仔 命靓靓 像着亻厓 像着亻厓\n你这只细妹仔 做你走哪 毋使你愁上又愁下\n你这只细妹仔 做你走哪 亻厓会照顾好自家\n你这只细妹仔 净望你 净望你 平安顺事\n你这只细妹仔 莫放核 莫放核 归来个路\n你这只细妹仔 爱记得 爱记得 亻厓等在这等你 等你归来呀\n\n翻译\n\n你这个女孩 认真念书 以后才嫁的到好老公\n你这个女孩 要勤俭 以后才找的到好工作\n你这个女孩 命很美 像到我 像到我\n你这个女孩 要有样子 以后才会得人惜\n你这个女孩 长的真美 是谁家的女孩呀\n你这个女孩 命很美 像到我 像到我\n你这个女孩 尽管走吧 不用你愁上愁下\n你这个女孩 尽管走吧 我会照顾好自己\n你这个女孩 只望你 只望你 平安顺事\n你这个女孩 不要忘记 不要忘记 回家的路\n你这个女孩 要记得 要记得 我们在这等你 等你回来")
 
 ; (print (.strip text))
 (setv id-code (hi.identify text))
