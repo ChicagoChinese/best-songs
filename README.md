@@ -2,6 +2,16 @@
 
 Generate a small website from an iTunes playlist.
 
-    pipenv shell
-    hy dump_track_meta.hy
-    hy generate_lyrics_report.hy
+## Prerequisites
+
+Install [.NET Current](https://dotnet.microsoft.com/download).
+
+## Installation
+
+    dotnet paket install
+
+## Commands
+
+Dump track metadata
+
+    dotnet run dump 'Best of 2020'
