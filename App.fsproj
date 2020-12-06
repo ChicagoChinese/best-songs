@@ -1,21 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <RootNamespace>best_songs</RootNamespace>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>best_songs</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="src/Prelude.fs" />
     <Compile Include="src/Dump.fs" />
+    <Compile Include="src/Warning.fs" />
+    <Compile Include="src/library/Hanzidentifier.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Fake.Core.Process" Version="5.20.3" />
     <PackageReference Include="FSharp.Data" Version="3.3.3" />
     <PackageReference Include="FSharp.Json" Version="0.4.0" />
   </ItemGroup>
-
+  <Import Project=".paket\Paket.Restore.targets" />
 </Project>

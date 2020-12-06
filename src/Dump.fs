@@ -52,12 +52,12 @@ let parseLink (text: string) =
 let getTrack location =
     let meta = getTrackMeta location
     let tags = meta.Format.Tags
-    { location = location
-      title = tags.Title.ToString()
-      artist = tags.Artist.ToString()
-      genre = tags.Genre.ToString()
-      lyrics = tags.Lyrics.ToString()
-      link = parseLink (tags.Comment.ToString()) }: Track.T
+    { Location = location
+      Title = tags.Title.ToString()
+      Artist = tags.Artist.ToString()
+      Genre = tags.Genre.ToString()
+      Lyrics = tags.Lyrics.ToString()
+      Link = parseLink (tags.Comment.ToString()) }: Track.T
 
 let main playlistName =
     printfn "Dumping track metadata for playlist '%s'\n" playlistName

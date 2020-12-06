@@ -23,14 +23,16 @@ module Track =
         | None
 
     type T =
-        { title: string
-          artist: string
-          link: Link
-          genre: string
-          lyrics: string
-          location: string }
+        { Title: string
+          Artist: string
+          Link: Link
+          Genre: string
+          Lyrics: string
+          Location: string }
 
-    let readTracksFromFile json = Json.deserialize<T array> json
+    let readTracksFromFile () =
+        File.ReadAllText(filename)
+        |> Json.deserialize<T array>
 
     let writeTracksToFile (tracks: T array) =
         let json = Json.serialize tracks
