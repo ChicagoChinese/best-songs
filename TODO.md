@@ -1,5 +1,7 @@
 # TODO
 
-- Migrate scripts to F#
-- Add task for converting tracks that don't have youtube links to .mp4 format
+- Figure out best way to add third-party libraries to project
+- Add subcommand for converting tracks that don't have youtube links to MP4 format
+- Add NuGet package for Hanzidentifier
+- Add NuGet package for HanziConv
 - Exclude stop words from word list
