@@ -13,12 +13,27 @@ module Template =
     let lyricsReport = "lyrics_report.html"
 
     let generateLyricsReport (tracks: Track.T array) =
+        let getSimplifiedLines (track: Track.T) =
+            let text =
+                sprintf "%s\n%s\n%s" track.Title track.Artist track.Lyrics
+
+            let simplified = HanziConv.toSimplified text
+            let lines = simplified.Split("\n")
+            (lines.[0], lines.[1], lines.[2..])
+
         html [] [
             head [] [ meta [ _charset "utf-8" ] ]
             body [] [
-                h1 [] [ str "Lyrics Report" ]
                 ol [] [
-                    for track in tracks -> li [] [ str track.Title ]
+                    for track in tracks do
+                        let (title, artist, lines) = getSimplifiedLines track
+                        yield h1 [] [ str title ]
+                        yield h2 [] [ str artist ]
+                        yield!
+                            [ for line in lines do
+                                yield str line
+                                yield br [] ]
+                        yield hr []
                 ]
             ]
         ]
