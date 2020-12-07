@@ -12,6 +12,7 @@ let main argv =
   | [|"dump"|] -> Dump.main "Recently Added"
   | [|"dump"; playlistName|] -> Dump.main playlistName
   | [|"warnings"|] -> Warning.main ()
-  | [|"page"|] -> Page.main ()
+  | [|"page"|] -> Page.main 50
+  | [|"page"; limit|] -> Page.main (int limit)
   | _ -> printfn "%s" usage
   0
