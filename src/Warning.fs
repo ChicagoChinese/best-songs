@@ -1,12 +1,30 @@
 module Warning
 
+open System.IO
 open System.Drawing
 open Prelude
 open Colorful
 
 module H = Hanzidentifier
 
-let filename = "lyrics_report.html"
+module Template =
+    open Giraffe.ViewEngine
+
+    let lyricsReport = "lyrics_report.html"
+
+    let generateLyricsReport (tracks: Track.T array) =
+        html [] [
+            head [] [ meta [ _charset "utf-8" ] ]
+            body [] [
+                h1 [] [ str "Lyrics Report" ]
+                ol [] [
+                    for track in tracks -> li [] [ str track.Title ]
+                ]
+            ]
+        ]
+        |> RenderView.AsString.htmlDocument
+        |> fun output -> File.WriteAllText(lyricsReport, output)
+        printfn "\nGenerated %s" lyricsReport
 
 let checkCarriageReturns (tracks: Track.T array) =
     let tracks =
@@ -57,6 +75,7 @@ let checkTraditionalTracks (tracks: Track.T array) =
         Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
             printfn "- %s  %s" track.Title track.Artist
+        Template.generateLyricsReport tracks
 
 let main () =
     let tracks = Track.readTracksFromFile ()
