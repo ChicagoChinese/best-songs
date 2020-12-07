@@ -1,15 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>best_songs</RootNamespace>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src/Prelude.fs" />
-    <Compile Include="src/Dump.fs" />
     <Compile Include="src/HanziConv.fs" />
     <Compile Include="src/Hanzidentifier.fs" />
+    <Compile Include="src/Prelude.fs" />
+    <Compile Include="src/Dump.fs" />
     <Compile Include="src/Warning.fs" />
+    <Compile Include="src/Page.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>
   <ItemGroup>

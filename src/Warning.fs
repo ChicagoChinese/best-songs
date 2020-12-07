@@ -24,17 +24,15 @@ module Template =
         html [] [
             head [] [ meta [ _charset "utf-8" ] ]
             body [] [
-                ol [] [
-                    for track in tracks do
-                        let (title, artist, lines) = getSimplifiedLines track
-                        yield h1 [] [ str title ]
-                        yield h2 [] [ str artist ]
-                        yield!
-                            [ for line in lines do
-                                yield str line
-                                yield br [] ]
-                        yield hr []
-                ]
+                for track in tracks do
+                    let (title, artist, lines) = getSimplifiedLines track
+                    yield h1 [] [ str title ]
+                    yield h2 [] [ str artist ]
+                    yield!
+                        [ for line in lines do
+                            yield str line
+                            yield br [] ]
+                    yield hr []
             ]
         ]
         |> RenderView.AsString.htmlDocument
