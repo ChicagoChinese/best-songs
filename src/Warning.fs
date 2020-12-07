@@ -37,7 +37,7 @@ let main () =
 
         Console.WriteLine(mesg, Color.Yellow)
         for track in badLinkTracks do
-            printfn "- %s by %s -> %s" track.Title track.Artist (Link.show track.Link)
+            printfn "- %s  %s -> %s" track.Title track.Artist (Link.show track.Link)
 
     let tradTracks =
         [| for track in tracks do
@@ -50,8 +50,8 @@ let main () =
     | 0 -> Console.WriteLine("All tracks have simplified lyrics!", Color.Green)
     | n ->
         let mesg =
-            sprintf "\nThere are %d tracks with traditional lyrics" n
+            sprintf "\nThere are %d tracks with traditional lyrics:" n
 
         Console.WriteLine(mesg, Color.Yellow)
         for track in tradTracks do
-            printfn "- %s by %s" track.Title track.Artist
+            printfn "- %s  %s" track.Title track.Artist

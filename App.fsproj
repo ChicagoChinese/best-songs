@@ -1,4 +1,3 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>best_songs</RootNamespace>
@@ -8,6 +7,7 @@
   <ItemGroup>
     <Compile Include="src/Prelude.fs" />
     <Compile Include="src/Dump.fs" />
+    <Compile Include="src/HanziConv.fs" />
     <Compile Include="src/Hanzidentifier.fs" />
     <Compile Include="src/Warning.fs" />
     <Compile Include="src/Main.fs" />
