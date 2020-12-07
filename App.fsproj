@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>best_songs</RootNamespace>
     <OutputType>Exe</OutputType>
@@ -13,9 +13,10 @@
     <Compile Include="src/Main.fs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Colorful.Console" Version="1.2.11" />
     <PackageReference Include="Fake.Core.Process" Version="5.20.3" />
     <PackageReference Include="FSharp.Data" Version="3.3.3" />
     <PackageReference Include="FSharp.Json" Version="0.4.0" />
+    <PackageReference Include="Giraffe.ViewEngine" Version="1.3.0" />
   </ItemGroup>
-  <Import Project=".paket\Paket.Restore.targets" />
 </Project>
