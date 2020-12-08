@@ -12,25 +12,32 @@ module Template =
 
     let lyricsReport = "lyrics_report.html"
 
-    let generateLyricsReport (tracks: Track.T array) =
-        let getSimplifiedLines (track: Track.T) =
-            let text =
-                sprintf "%s\n%s\n%s" track.Title track.Artist track.Lyrics
+    let convert = HanziConv.toSimplified
 
-            let simplified = HanziConv.toSimplified text
-            let lines = simplified.Split("\n")
-            (lines.[0], lines.[1], lines.[2..])
+    let generateLyricsReport (tracks: Track.T array) =
+        let getSimplifiedLines text =
+            let simplified = convert text
+            [| for line in simplified.Split("\r") -> (H.identify line = H.Mixed, line) |]
 
         html [] [
-            head [] [ meta [ _charset "utf-8" ] ]
+            head [] [
+                meta [ _charset "utf-8" ]
+                style [] [
+                    str """
+                    .highlighted {
+                      background-color: palegoldenrod;
+                    }
+                    """
+                ]
+            ]
             body [] [
                 for track in tracks do
-                    let (title, artist, lines) = getSimplifiedLines track
-                    yield h1 [] [ str title ]
-                    yield h2 [] [ str artist ]
+                    yield h1 [] [ str (convert track.Title) ]
+                    yield h2 [] [ str (convert track.Artist) ]
                     yield!
-                        [ for line in lines do
-                            yield str line
+                        [ for (isMixed, line) in (getSimplifiedLines track.Lyrics) do
+                            yield span (if isMixed then [ _class "highlighted" ] else []) [ str line ]
+
                             yield br [] ]
                     yield hr []
             ]
@@ -53,6 +60,7 @@ let checkCarriageReturns (tracks: Track.T array) =
         Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
             printfn "- %s  %s" track.Title track.Artist
+        printfn ""
 
 let checkBadLinks (tracks: Track.T array) =
     let tracks =
@@ -70,6 +78,7 @@ let checkBadLinks (tracks: Track.T array) =
         Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
             printfn "- %s  %s -> %s" track.Title track.Artist (Link.show track.Link)
+        printfn ""
 
 let checkTraditionalTracks (tracks: Track.T array) =
     let tracks =
@@ -83,7 +92,7 @@ let checkTraditionalTracks (tracks: Track.T array) =
     | 0 -> Console.WriteLine("All tracks have simplified lyrics!", Color.Green)
     | n ->
         let mesg =
-            sprintf "\nThere are %d tracks with traditional lyrics:" n
+            sprintf "There are %d tracks with traditional lyrics:" n
 
         Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
