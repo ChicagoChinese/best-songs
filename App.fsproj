@@ -11,11 +11,13 @@
     <Compile Include="src/Dump.fs" />
     <Compile Include="src/Warning.fs" />
     <Compile Include="src/Page.fs" />
+    <Compile Include="src/Zip.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Colorful.Console" Version="1.2.11" />
     <PackageReference Include="Fake.Core.Process" Version="5.20.3" />
+    <PackageReference Include="Fake.IO.Zip" Version="5.20.3" />
     <PackageReference Include="FSharp.Data" Version="3.3.3" />
     <PackageReference Include="FSharp.Json" Version="0.4.0" />
     <PackageReference Include="Giraffe.ViewEngine" Version="1.3.0" />
