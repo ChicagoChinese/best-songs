@@ -46,16 +46,16 @@ module Template =
         |> fun output -> File.WriteAllText(lyricsReport, output)
         printfn "\nGenerated %s" lyricsReport
 
-let checkCarriageReturns (tracks: Track.T array) =
+let checkExcessivNewlines (tracks: Track.T array) =
     let tracks =
         [| for track in tracks do
-            if track.Lyrics.Contains("\r\n") then track |]
+            if track.Lyrics.Contains("\n\n\n") then track |]
 
     match tracks.Length with
-    | 0 -> Console.WriteLine("No carriage returns detected!", Color.Green)
+    | 0 -> Console.WriteLine("No excessive newlines detected!", Color.Green)
     | n ->
         let mesg =
-            sprintf "\nThere are %d tracks whose lyrics have carriage returns:" n
+            sprintf "\nThere are %d tracks whose lyrics have excessive newlines:" n
 
         Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
@@ -102,6 +102,6 @@ let checkTraditionalTracks (tracks: Track.T array) =
 let main () =
     let tracks = Track.readTracksFromFile ()
 
-    checkCarriageReturns tracks
+    checkExcessivNewlines tracks
     checkBadLinks tracks
     checkTraditionalTracks tracks

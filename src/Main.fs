@@ -1,10 +1,11 @@
 let usage = """
 Commands:
 
-dump <playlist name>    Dump track metadata for given playlist
+dump [playlist name]    Dump track metadata for given playlist
 warnings                Generate warnings report
-page                    Generate tracks page
-zip                     Generate zip file containing track files
+page [n]                Generate tracks page for first n tracks (n defaults to 50)
+zip                     Generate zip file containing first 50 track files
+mp4                     Convert tracks without youtube links to MP4 video format
 """
 
 [<EntryPoint>]
@@ -16,5 +17,6 @@ let main argv =
   | [|"page"|] -> Page.main 50
   | [|"page"; limit|] -> Page.main (int limit)
   | [|"zip"|] -> Zip.main ()
+  | [|"mp4"|] -> Mp4.main ()
   | _ -> printfn "%s" usage
   0

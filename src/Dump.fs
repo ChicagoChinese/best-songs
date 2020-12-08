@@ -56,7 +56,7 @@ let getTrack location =
       Title = tags.Title
       Artist = tags.Artist
       Genre = tags.Genre
-      Lyrics = tags.Lyrics
+      Lyrics = tags.Lyrics.Replace('\r', '\n')
       Link = parseLink tags.Comment }: Track.T
 
 let main playlistName =
