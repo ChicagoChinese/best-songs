@@ -62,12 +62,14 @@ let checkExcessivNewlines (tracks: Track.T array) =
             printfn "- %s  %s" track.Title track.Artist
         printfn ""
 
+let getBadLinkTracks (tracks: Track.T array) =
+    [| for track in tracks do
+        match track.Link with
+        | Link.YouTube _ -> ()
+        | _ -> yield track |]
+
 let checkBadLinks (tracks: Track.T array) =
-    let tracks =
-        [| for track in tracks do
-            match track.Link with
-            | Link.YouTube _ -> ()
-            | _ -> yield track |]
+    let tracks = getBadLinkTracks tracks
 
     match tracks.Length with
     | 0 -> Console.WriteLine("All tracks have good youtube links!")

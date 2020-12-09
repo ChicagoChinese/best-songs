@@ -12,7 +12,7 @@
     <Compile Include="src/Warning.fs" />
     <Compile Include="src/Page.fs" />
     <Compile Include="src/Zip.fs" />
-    <Compile Include="src/Mp4.fs" />
+    <Compile Include="src/Video.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>
   <ItemGroup>
