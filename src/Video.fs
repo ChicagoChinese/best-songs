@@ -8,20 +8,65 @@ open Prelude
 
 let assetsDir = "assets"
 
-let extractImage trackFile =
-    CreateProcess.fromRawCommand "AtomicParsley" [ trackFile; "--extractPix" ]
-    |> CreateProcess.redirectOutput
+// Don't redirect output so we can see progress of conversion
+let runCommand command args =
+    CreateProcess.fromRawCommand command args
     |> CreateProcess.ensureExitCode
     |> Proc.run
     |> ignore
 
-    let imageFile =
-        Path.Combine
-            (assetsDir,
-             Path.GetFileNameWithoutExtension(trackFile)
-             + "_artwork_1.jpg")
+let extractImage (trackFile: string) =
+    let getImageFile ext =
+        let path =
+            Path.Combine
+                (assetsDir,
+                 Path.GetFileNameWithoutExtension(trackFile)
+                 + "_artwork_1"
+                 + ext)
 
-    if File.Exists(imageFile) then Some imageFile else None
+        if File.Exists(path) then Some path else None
+
+    getCommandOutput "AtomicParsley" [ trackFile; "--extractPix" ]
+    |> ignore
+
+    match ([ getImageFile ".jpg"
+             getImageFile ".png" ]
+           |> List.filter Option.isSome) with
+    | [] -> None
+    | hd :: _ -> hd
+
+let convertToMp4 audioFile imageFile =
+    let videoFile = Path.ChangeExtension(audioFile, ".mp4")
+    runCommand
+        "ffmpeg"
+        [ // overwrite existing file
+          "-y"
+          // loop image infinitely
+          "-loop"
+          "1"
+          // image file
+          "-i"
+          imageFile
+          // audio file
+          "-i"
+          audioFile
+          // don't re-encode audio
+          "-c:a"
+          "copy"
+          // use x264 to encode video
+          "-c:v"
+          "libx264"
+          // set constant rate factor to medium (0-51, 0 is lossless)
+          "-crf"
+          "20"
+          // if not provided, will use yuv444p, which is not as widely supported
+          "-pix_fmt"
+          "yuv420p"
+          // needed to finish encoding after the audio stream finishes
+          "-shortest"
+          videoFile ]
+    |> ignore
+    printfn "Generated %s" videoFile
 
 let main limit =
     let tracks =
@@ -32,9 +77,11 @@ let main limit =
     for track in tracks do
         printfn "%s" track.Title
 
-        let destFile =
+        let audioFile =
             Path.Combine(assetsDir, Path.GetFileName(track.Location))
 
-        File.Copy(track.Location, destFile, true)
+        File.Copy(track.Location, audioFile, true)
 
-        printfn "%A" (extractImage destFile)
+        match extractImage audioFile with
+        | None -> printfn "Failed to extract image from %s" audioFile
+        | Some imageFile -> convertToMp4 audioFile imageFile
