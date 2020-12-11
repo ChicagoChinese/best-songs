@@ -7,45 +7,6 @@ open Colorful
 
 module H = Hanzidentifier
 
-module Template =
-    open Giraffe.ViewEngine
-
-    let lyricsReport = "lyrics_report.html"
-
-    let convert = HanziConv.toSimplified
-
-    let generateLyricsReport (tracks: Track.T array) =
-        let getSimplifiedLines text =
-            let simplified = convert text
-            [| for line in simplified.Split("\r") -> (H.identify line = H.Mixed, line) |]
-
-        html [] [
-            head [] [
-                meta [ _charset "utf-8" ]
-                style [] [
-                    str """
-                    .highlighted {
-                      background-color: palegoldenrod;
-                    }
-                    """
-                ]
-            ]
-            body [] [
-                for track in tracks do
-                    yield h1 [] [ str (convert track.Title) ]
-                    yield h2 [] [ str (convert track.Artist) ]
-                    yield!
-                        [ for (isMixed, line) in (getSimplifiedLines track.Lyrics) do
-                            yield span (if isMixed then [ _class "highlighted" ] else []) [ str line ]
-
-                            yield br [] ]
-                    yield hr []
-            ]
-        ]
-        |> RenderView.AsString.htmlDocument
-        |> fun output -> File.WriteAllText(lyricsReport, output)
-        printfn "\nGenerated %s" lyricsReport
-
 let checkExcessivNewlines (tracks: Track.T array) =
     let tracks =
         [| for track in tracks do
@@ -99,7 +60,7 @@ let checkTraditionalTracks (tracks: Track.T array) =
         Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
             printfn "- %s  %s" track.Title track.Artist
-        Template.generateLyricsReport tracks
+        LyricsReport.generate tracks false
 
 let main () =
     let tracks = Track.readTracksFromFile ()

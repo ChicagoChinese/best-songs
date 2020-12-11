@@ -8,6 +8,7 @@
     <Compile Include="src/lib/Hanzidentifier.fs" />
     <Compile Include="src/lib/HanziConv.fs" />
     <Compile Include="src/Prelude.fs" />
+    <Compile Include="src/LyricsReport.fs" />
     <Compile Include="src/Dump.fs" />
     <Compile Include="src/Warning.fs" />
     <Compile Include="src/Page.fs" />
