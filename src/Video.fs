@@ -7,6 +7,7 @@ open Prelude
 // https://github.com/feihong/music-tools/blob/master/tasks/convert.py#L47
 
 let assetsDir = "assets"
+let outputDir = "output"
 
 // Don't redirect output so we can see progress of conversion
 let runCommand command args =
@@ -35,8 +36,13 @@ let extractImage (trackFile: string) =
     | [] -> None
     | hd :: _ -> hd
 
-let convertToMp4 audioFile imageFile =
-    let videoFile = Path.ChangeExtension(audioFile, ".mp4")
+let convertToMp4 (audioFile: string) imageFile =
+    let videoFile =
+        Path.Combine
+            (outputDir,
+             Path.GetFileNameWithoutExtension(audioFile)
+             + ".mp4")
+
     runCommand
         "ffmpeg"
         [ // overwrite existing file
