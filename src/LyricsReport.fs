@@ -16,7 +16,7 @@ let convert = HanziConv.toSimplified
 let generate (tracks: Track.T array) includeDisclaimer =
     let getSimplifiedLines text =
         let simplified = convert text
-        [| for line in simplified.Split("\r") -> (H.identify line = H.Mixed, line) |]
+        [| for line in simplified.Split("\n") -> (H.identify line = H.Mixed, line) |]
 
     html [] [
         head [] [
@@ -38,7 +38,7 @@ let generate (tracks: Track.T array) includeDisclaimer =
                         yield span (if isMixed then [ _class "highlighted" ] else []) [ str line ]
 
                         yield br [] ]
-                yield! if includeDisclaimer then [ str disclaimer ] else []
+                yield! if includeDisclaimer then [ br []; str disclaimer ] else []
                 yield hr []
         ]
     ]

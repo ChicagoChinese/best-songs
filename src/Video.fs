@@ -43,36 +43,39 @@ let convertToMp4 (audioFile: string) imageFile =
              Path.GetFileNameWithoutExtension(audioFile)
              + ".mp4")
 
-    runCommand
-        "ffmpeg"
-        [ // overwrite existing file
-          "-y"
-          // loop image infinitely
-          "-loop"
-          "1"
-          // image file
-          "-i"
-          imageFile
-          // audio file
-          "-i"
-          audioFile
-          // don't re-encode audio
-          "-c:a"
-          "copy"
-          // use x264 to encode video
-          "-c:v"
-          "libx264"
-          // set constant rate factor to medium (0-51, 0 is lossless)
-          "-crf"
-          "20"
-          // if not provided, will use yuv444p, which is not as widely supported
-          "-pix_fmt"
-          "yuv420p"
-          // needed to finish encoding after the audio stream finishes
-          "-shortest"
-          videoFile ]
-    |> ignore
-    printfn "Generated %s" videoFile
+    if File.Exists(videoFile) then
+        printfn "%s already exists, skipping conversion" videoFile
+    else
+        runCommand
+            "ffmpeg"
+            [ // overwrite existing file
+              "-y"
+              // loop image infinitely
+              "-loop"
+              "1"
+              // image file
+              "-i"
+              imageFile
+              // audio file
+              "-i"
+              audioFile
+              // don't re-encode audio
+              "-c:a"
+              "copy"
+              // use x264 to encode video
+              "-c:v"
+              "libx264"
+              // set constant rate factor to medium (0-51, 0 is lossless)
+              "-crf"
+              "20"
+              // if not provided, will use yuv444p, which is not as widely supported
+              "-pix_fmt"
+              "yuv420p"
+              // needed to finish encoding after the audio stream finishes
+              "-shortest"
+              videoFile ]
+        |> ignore
+        printfn "Generated %s" videoFile
 
 let main limit =
     let tracks =
@@ -91,3 +94,5 @@ let main limit =
         match extractImage audioFile with
         | None -> printfn "Failed to extract image from %s" audioFile
         | Some imageFile -> convertToMp4 audioFile imageFile
+
+    LyricsReport.generate tracks true
