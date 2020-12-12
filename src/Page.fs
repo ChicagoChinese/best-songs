@@ -12,11 +12,13 @@ module Template =
         html [] [
             head [] [
                 meta [ _charset "utf-8" ]
+                link [ _href "https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
+                       _rel "stylesheet" ]
                 style [] [
-                    str """
+                    rawText """
                     body {
                       font-size: 14px;
-                      font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
+                      font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
                     }"""
                 ]
             ]
@@ -27,10 +29,13 @@ module Template =
                         yield
                             li [] [
                                 a [ _href (Link.show track.Link)
-                                    _target "_blank" ] [
+                                    _target "_blank"
+                                    _style "font-size: 1.2rem" ] [
                                     str track.Title
                                 ]
-                                str (" by " + track.Artist)
+                                span [ _style "color: #888" ] [
+                                    str (sprintf " ✪ %s ♫ %s" track.Artist track.Genre)
+                                ]
                             ]
                 ]
             ]
