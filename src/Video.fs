@@ -32,9 +32,9 @@ let extractImage (trackFile: string) =
 
     match ([ getImageFile ".jpg"
              getImageFile ".png" ]
-           |> List.filter Option.isSome) with
-    | [] -> None
-    | hd :: _ -> hd
+           |> List.tryFind Option.isSome) with
+    | Some imageFile -> imageFile
+    | None -> None
 
 let convertToMp4 (audioFile: string) imageFile =
     let videoFile =
