@@ -8,7 +8,7 @@ module Template =
 
     let tracksPage = "tracks.html"
 
-    let generateTracksPage (tracks: Track.T array) =
+    let generateTracksPage (playlist: Playlist.T) =
         html [] [
             head [] [
                 meta [ _charset "utf-8" ]
@@ -21,8 +21,9 @@ module Template =
                 ]
             ]
             body [] [
+                h1 [] [ str playlist.Name ]
                 ol [] [
-                    for track in tracks do
+                    for track in playlist.Tracks do
                         yield
                             li [] [
                                 a [ _href (Link.show track.Link)
@@ -39,6 +40,10 @@ module Template =
         printfn "\nGenerated %s" tracksPage
 
 let main limit =
-    let tracks = Track.readTracksFromFile ()
-    let tracks = tracks.[0..(limit - 1)]
-    Template.generateTracksPage tracks
+    let playlist = Playlist.readFromFile ()
+
+    let playlist =
+        { playlist with
+              Tracks = playlist.Tracks.[0..(limit - 1)] }
+
+    Template.generateTracksPage playlist

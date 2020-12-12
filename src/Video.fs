@@ -79,7 +79,7 @@ let convertToMp4 (audioFile: string) imageFile =
 
 let main limit =
     let tracks =
-        Track.readTracksFromFile ()
+        (Playlist.readFromFile ()).Tracks
         |> Warning.getBadLinkTracks
 
     let tracks = tracks.[0..(limit - 1)]

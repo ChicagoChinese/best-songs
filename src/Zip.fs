@@ -7,7 +7,8 @@ let tracksZipFile = "tracks.zip"
 
 let main () =
     let files =
-        [ for track in Track.readTracksFromFile () -> track.Location ]
+        (Playlist.readFromFile ()).Tracks
+        |> Array.map (fun t -> t.Location)
 
     let files = files.[0..49]
 

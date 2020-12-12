@@ -4,36 +4,25 @@ open System.IO
 open FSharp.Data
 open Prelude
 
-type FfprobeMeta =
+type SwiftMeta =
     JsonProvider<"""
 {
-  "format": {
-    "tags": {
-      "title": "STRING",
+  "name": "STRING",
+  "tracks": [
+     {
+      "name": "STRING",
       "artist": "STRING",
       "genre": "STRING",
       "lyrics": "STRING",
-      "comment": "https://example.com/hello/"
+      "comment": "STRING",
+      "location": "STRING"
     }
-  }
+  ]
 }""">
 
-let getTrackLocations playlistName =
-    let output =
-        getCommandOutput "swift" [ "track_paths.swift"; playlistName ]
-
-    output.Split "\n"
-
-let getTrackMetaJson location =
-    getCommandOutput
-        "ffprobe"
-        [ location
-          "-print_format"
-          "json"
-          "-show_format" ]
-
-let getTrackMeta location =
-    getTrackMetaJson location |> FfprobeMeta.Parse
+let getRawPlaylist playlistName =
+    getCommandOutput "swift" [ "dump_playlist.swift"; playlistName ]
+    |> SwiftMeta.Parse
 
 let parseLink (text: string) =
     let lines = text.Split "\n"
@@ -49,20 +38,22 @@ let parseLink (text: string) =
             | Some link -> Link.YouTubeLong link
             | None -> Link.Other(lines |> Array.tryHead |> Option.defaultValue "")
 
-let getTrack location =
-    let meta = getTrackMeta location
-    let tags = meta.Format.Tags
-    { Location = location
-      Title = tags.Title
-      Artist = tags.Artist
-      Genre = tags.Genre
-      Lyrics = tags.Lyrics.Replace('\r', '\n')
-      Link = parseLink tags.Comment }: Track.T
+let getPlaylist playlistName =
+    let p = getRawPlaylist playlistName
+    { Name = p.Name
+      Tracks =
+          p.Tracks
+          |> Array.map (fun t ->
+              { Location = t.Location
+                Title = t.Name
+                Artist = t.Artist
+                Genre = t.Genre
+                Lyrics = t.Lyrics.Replace('\r', '\n')
+                Link = parseLink t.Comment }: Track.T) }: Playlist.T
 
 let main playlistName =
     printfn "Dumping track metadata for playlist '%s'\n" playlistName
-    getTrackLocations playlistName
-    |> Array.map getTrack
-    |> Track.writeTracksToFile
 
-    printfn "Generated %s" Track.filename
+    getPlaylist playlistName |> Playlist.writeToFile
+
+    printfn "Generated %s" Playlist.defaultFilename

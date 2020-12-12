@@ -30,8 +30,6 @@ module Link =
         | None -> "no link"
 
 module Track =
-    let filename = "tracks.json"
-
     type T =
         { Title: string
           Artist: string
@@ -40,10 +38,15 @@ module Track =
           Lyrics: string
           Location: string }
 
-    let readTracksFromFile () =
-        File.ReadAllText(filename)
-        |> Json.deserialize<T array>
+module Playlist =
+    let defaultFilename = "playlist.json"
 
-    let writeTracksToFile (tracks: T array) =
-        let json = Json.serialize tracks
-        File.WriteAllText(filename, json)
+    type T = { Name: string; Tracks: Track.T array }
+
+    let readFromFile () =
+        File.ReadAllText(defaultFilename)
+        |> Json.deserialize<T>
+
+    let writeToFile (playlist: T) =
+        let json = Json.serialize playlist
+        File.WriteAllText(defaultFilename, json)
