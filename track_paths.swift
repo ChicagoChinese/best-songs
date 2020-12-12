@@ -16,12 +16,12 @@ extension Array {
 
 @objc public protocol Track {
   @objc optional var name: String {get}
-  @objc optional var album: String {get}
   @objc optional var artist: String {get}
   @objc optional var genre: String {get}
   @objc optional var lyrics: String {get}
   @objc optional var comment: String {get}
   @objc optional var location: URL { get }
+  @objc optional var album: String {get}
 }
 extension SBObject: Track {}
 
@@ -38,9 +38,10 @@ extension SBApplication : iTunesApplication {}
 
 func findPlaylist(name: String, playlists: [Playlist]) -> Playlist? {
   for playlist in playlists {
-    let pname = playlist.name ?? ""
-    if pname.starts(with: name) {
-      return playlist
+    if let pname = playlist.name {
+      if pname.starts(with: name) {
+        return playlist
+      }
     }
   }
   return nil
@@ -58,9 +59,28 @@ if let app: iTunesApplication = SBApplication(bundleIdentifier: "com.apple.Music
     print("Did not find a playlist whose name starts with '\(searchName)'")
     exit(1)
   }
+
   let tracks = playlist.tracks?() ?? []
-  for track in tracks {
-    // print(track.name ?? "")
-    print(track.location?.path ?? "")
+  let dictArray = tracks.map { track in
+    [
+      "name": track.name ?? "",
+      "artist": track.artist ?? "",
+      "genre": track.genre ?? "",
+      "comment": track.comment ?? "",
+      "location": track.location?.path ?? "",
+      "lyrics": track.lyrics ?? "",
+      "album": track.album ?? "",
+    ]
   }
+
+  let result: [String: Any] = [
+    "name": searchName,
+    "tracks": dictArray,
+  ]
+
+  guard let jsonData = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted) else {
+    print("Failed to serialize tracks to JSON")
+    exit(1)
+  }
+  print(String(decoding: jsonData, as: UTF8.self))
 }
