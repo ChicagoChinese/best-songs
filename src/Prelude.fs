@@ -43,10 +43,13 @@ module Playlist =
 
     type T = { Name: string; Tracks: Track.T array }
 
+    let config =
+        JsonConfig.create (jsonFieldNaming = Json.lowerCamelCase)
+
     let readFromFile () =
         File.ReadAllText(defaultFilename)
-        |> Json.deserialize<T>
+        |> Json.deserializeEx<T> config
 
     let writeToFile (playlist: T) =
-        let json = Json.serialize playlist
+        let json = Json.serializeEx config playlist
         File.WriteAllText(defaultFilename, json)
