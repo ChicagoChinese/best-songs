@@ -19,11 +19,12 @@ let runCommand command args =
 let extractImage (trackFile: string) =
     let getImageFile ext =
         let path =
-            Path.Combine
-                (assetsDir,
-                 Path.GetFileNameWithoutExtension(trackFile)
-                 + "_artwork_1"
-                 + ext)
+            Path.Combine(
+                assetsDir,
+                Path.GetFileNameWithoutExtension(trackFile)
+                + "_artwork_1"
+                + ext
+            )
 
         if File.Exists(path) then Some path else None
 
@@ -38,13 +39,14 @@ let extractImage (trackFile: string) =
 
 let convertToMp4 (audioFile: string) imageFile =
     let videoFile =
-        Path.Combine
-            (outputDir,
-             Path.GetFileNameWithoutExtension(audioFile)
-             + ".mp4")
+        Path.Combine(
+            outputDir,
+            Path.GetFileNameWithoutExtension(audioFile)
+            + ".mp4"
+        )
 
     if File.Exists(videoFile) then
-        printfn "%s already exists, skipping conversion" videoFile
+        printfn $"{videoFile} already exists, skipping conversion"
     else
         runCommand
             "ffmpeg"
@@ -75,7 +77,8 @@ let convertToMp4 (audioFile: string) imageFile =
               "-shortest"
               videoFile ]
         |> ignore
-        printfn "Generated %s" videoFile
+
+        printfn $"Generated {videoFile}"
 
 let main limit =
     let tracks =
@@ -83,8 +86,9 @@ let main limit =
         |> Warning.getBadLinkTracks
 
     let tracks = tracks.[0..(limit - 1)]
+
     for track in tracks do
-        printfn "%s" track.Title
+        printfn $"{track.Title}"
 
         let audioFile =
             Path.Combine(assetsDir, Path.GetFileName(track.Location))
@@ -92,7 +96,7 @@ let main limit =
         File.Copy(track.Location, audioFile, true)
 
         match extractImage audioFile with
-        | None -> printfn "Failed to extract image from %s" audioFile
+        | None -> printfn $"Failed to extract image from {audioFile}"
         | Some imageFile -> convertToMp4 audioFile imageFile
 
     LyricsReport.generate tracks true

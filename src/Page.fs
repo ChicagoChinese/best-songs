@@ -15,7 +15,8 @@ module Template =
                 link [ _href "https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
                        _rel "stylesheet" ]
                 style [] [
-                    rawText """
+                    rawText
+                        """
                     body {
                       font-size: 14px;
                       font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -34,7 +35,7 @@ module Template =
                                     str track.Title
                                 ]
                                 span [ _style "color: #888" ] [
-                                    str (sprintf " ✪ %s ♫ %s" track.Artist track.Genre)
+                                    str $" ✪ {track.Artist} ♫ {track.Genre}"
                                 ]
                             ]
                 ]
@@ -42,7 +43,8 @@ module Template =
         ]
         |> RenderView.AsString.htmlDocument
         |> fun output -> File.WriteAllText(tracksPage, output)
-        printfn "\nGenerated %s" tracksPage
+
+        printfn $"\nGenerated {tracksPage}"
 
 let main limit =
     let playlist = Playlist.readFromFile ()

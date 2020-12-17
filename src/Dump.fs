@@ -52,8 +52,8 @@ let getPlaylist playlistName =
                 Link = parseLink t.Comment }: Track.T) }: Playlist.T
 
 let main playlistName =
-    printfn "Dumping track metadata for playlist '%s'\n" playlistName
+    printfn $"Dumping track metadata for playlist '{playlistName}'\n"
 
     getPlaylist playlistName |> Playlist.writeToFile
 
-    printfn "Generated %s" Playlist.defaultFilename
+    printfn $"Generated {Playlist.defaultFilename}"

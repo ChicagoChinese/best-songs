@@ -18,5 +18,5 @@ let main argv =
   | [|"page"; limit|] -> Page.main (int limit)
   | [|"zip"|] -> Zip.main ()
   | [|"video"; limit|] -> Video.main (int limit)
-  | _ -> printfn "%s" usage
+  | _ -> printfn $"{usage}"
   0

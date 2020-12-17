@@ -15,12 +15,11 @@ let checkExcessivNewlines (tracks: Track.T array) =
     match tracks.Length with
     | 0 -> Console.WriteLine("No excessive newlines detected!", Color.Green)
     | n ->
-        let mesg =
-            sprintf "\nThere are %d tracks whose lyrics have excessive newlines:" n
+        Console.WriteLine($"\nThere are {n} tracks whose lyrics have excessive newlines:", Color.Yellow)
 
-        Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
-            printfn "- %s  %s" track.Title track.Artist
+            printfn $"- {track.Title} {track.Artist}"
+
         printfn ""
 
 let getBadLinkTracks (tracks: Track.T array) =
@@ -35,12 +34,11 @@ let checkBadLinks (tracks: Track.T array) =
     match tracks.Length with
     | 0 -> Console.WriteLine("All tracks have good youtube links!")
     | n ->
-        let mesg =
-            sprintf "\nThere are %d tracks with bad links:" n
+        Console.WriteLine($"\nThere are {n} tracks with bad links:", Color.Yellow)
 
-        Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
-            printfn "- %s  %s -> %s" track.Title track.Artist (Link.show track.Link)
+            printfn $"- {track.Title} {track.Artist} -> {Link.show track.Link}"
+
         printfn ""
 
 let checkTraditionalTracks (tracks: Track.T array) =
@@ -54,12 +52,11 @@ let checkTraditionalTracks (tracks: Track.T array) =
     match tracks.Length with
     | 0 -> Console.WriteLine("All tracks have simplified lyrics!", Color.Green)
     | n ->
-        let mesg =
-            sprintf "There are %d tracks with traditional lyrics:" n
+        Console.WriteLine($"There are {n} tracks with traditional lyrics:", Color.Yellow)
 
-        Console.WriteLine(mesg, Color.Yellow)
         for track in tracks do
-            printfn "- %s  %s" track.Title track.Artist
+            printfn $"- {track.Title} {track.Artist}"
+
         LyricsReport.generate tracks false
 
 let main () =

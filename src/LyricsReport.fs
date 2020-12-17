@@ -22,7 +22,8 @@ let generate (tracks: Track.T array) includeDisclaimer =
         head [] [
             meta [ _charset "utf-8" ]
             style [] [
-                str """
+                str
+                    """
                 .highlighted {
                   background-color: palegoldenrod;
                 }
@@ -33,15 +34,18 @@ let generate (tracks: Track.T array) includeDisclaimer =
             for track in tracks do
                 yield h1 [] [ str (convert track.Title) ]
                 yield h2 [] [ str (convert track.Artist) ]
+
                 yield!
                     [ for (isMixed, line) in (getSimplifiedLines track.Lyrics) do
                         yield span (if isMixed then [ _class "highlighted" ] else []) [ str line ]
 
                         yield br [] ]
+
                 yield! if includeDisclaimer then [ br []; str disclaimer ] else []
                 yield hr []
         ]
     ]
     |> RenderView.AsString.htmlDocument
     |> fun output -> File.WriteAllText(lyricsReport, output)
-    printfn "\nGenerated %s" lyricsReport
+
+    printfn $"\nGenerated {lyricsReport}"

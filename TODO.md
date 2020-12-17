@@ -1,9 +1,9 @@
 # TODO
 
-- Fix problems with Workout playlist (need at least 2 playlists to test site generation)
 - Finish uploading MP4 files
 - Add ability to generate pinyin slugs
 - Add segmentation to increase readability of pinyin slugs
+- Add Workout and Bedtime to playlists
 - Generate pure-html static site that can display multiple playlists
 - Publish to GitHub Pages
 - F#: Generate word list
