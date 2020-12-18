@@ -18,7 +18,7 @@ let checkExcessivNewlines (tracks: Track.T array) =
         Console.WriteLine($"\nThere are {n} tracks whose lyrics have excessive newlines:", Color.Yellow)
 
         for track in tracks do
-            printfn $"- {track.Title} {track.Artist}"
+            printfn $"- {track.Title}  {track.Artist}"
 
         printfn ""
 
@@ -37,7 +37,7 @@ let checkBadLinks (tracks: Track.T array) =
         Console.WriteLine($"\nThere are {n} tracks with bad links:", Color.Yellow)
 
         for track in tracks do
-            printfn $"- {track.Title} {track.Artist} -> {Link.show track.Link}"
+            printfn $"- {track.Title}  {track.Artist} -> {Link.show track.Link}"
 
         printfn ""
 
@@ -55,7 +55,7 @@ let checkTraditionalTracks (tracks: Track.T array) =
         Console.WriteLine($"There are {n} tracks with traditional lyrics:", Color.Yellow)
 
         for track in tracks do
-            printfn $"- {track.Title} {track.Artist}"
+            printfn $"- {track.Title}  {track.Artist}"
 
         LyricsReport.generate tracks false
 

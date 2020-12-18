@@ -80,16 +80,12 @@ let convertToMp4 (audioFile: string) imageFile =
 
         printfn $"Generated {videoFile}"
 
-let main limit =
-    let tracks =
-        (Playlist.readFromFile ()).Tracks
-        |> Warning.getBadLinkTracks
+let main title =
+    let tracks = (Playlist.readFromFile ()).Tracks
 
-    let tracks = tracks.[0..(limit - 1)]
-
-    for track in tracks do
-        printfn $"{track.Title}"
-
+    match tracks |> Array.tryFind (fun t -> t.Title = title) with
+    | None -> printfn $"No track with title {title}"
+    | Some track ->
         let audioFile =
             Path.Combine(assetsDir, Path.GetFileName(track.Location))
 
@@ -99,4 +95,4 @@ let main limit =
         | None -> printfn $"Failed to extract image from {audioFile}"
         | Some imageFile -> convertToMp4 audioFile imageFile
 
-    LyricsReport.generate tracks true
+        LyricsReport.generate [| track |] true
