@@ -40,6 +40,7 @@ module Track =
 
 module Playlist =
     let defaultFilename = "playlist.json"
+    let playlistDirectory = "playlists"
 
     type T = { Name: string; Tracks: Track.T array }
 
@@ -53,6 +54,11 @@ module Playlist =
     let readFromDefaultFile () = readFromFile defaultFilename
 
     let getTracksFromDefaultFile () = (readFromDefaultFile ()).Tracks
+
+    let getPlaylists () =
+        Directory.GetFiles(playlistDirectory)
+        |> Array.sort
+        |> Array.map readFromFile
 
     let writeToFile (playlist: T) =
         let json = Json.serializeEx config playlist

@@ -32,7 +32,7 @@ let checkBadLinks (tracks: Track.T array) =
     let tracks = getBadLinkTracks tracks
 
     match tracks.Length with
-    | 0 -> Console.WriteLine("All tracks have good youtube links!")
+    | 0 -> Console.WriteLine("All tracks have good youtube links!", Color.Green)
     | n ->
         Console.WriteLine($"\nThere are {n} tracks with bad links:", Color.Yellow)
 
