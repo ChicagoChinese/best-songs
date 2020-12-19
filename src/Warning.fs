@@ -60,7 +60,7 @@ let checkTraditionalTracks (tracks: Track.T array) =
         LyricsReport.generate tracks false
 
 let main () =
-    let tracks = (Playlist.readFromFile ()).Tracks
+    let tracks = Playlist.getTracksFromDefaultFile ()
 
     checkExcessivNewlines tracks
     checkBadLinks tracks

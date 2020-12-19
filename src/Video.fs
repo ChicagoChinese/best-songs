@@ -81,7 +81,7 @@ let convertToMp4 (audioFile: string) imageFile =
         printfn $"Generated {videoFile}"
 
 let main title =
-    let tracks = (Playlist.readFromFile ()).Tracks
+    let tracks = Playlist.getTracksFromDefaultFile ()
 
     match tracks |> Array.tryFind (fun t -> t.Title = title) with
     | None -> printfn $"No track with title {title}"

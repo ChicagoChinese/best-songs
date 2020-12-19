@@ -47,7 +47,7 @@ module Template =
         printfn $"\nGenerated {tracksPage}"
 
 let main limit =
-    let playlist = Playlist.readFromFile ()
+    let playlist = Playlist.readFromDefaultFile ()
 
     let playlist =
         { playlist with

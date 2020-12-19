@@ -46,9 +46,13 @@ module Playlist =
     let config =
         JsonConfig.create (jsonFieldNaming = Json.lowerCamelCase)
 
-    let readFromFile () =
-        File.ReadAllText(defaultFilename)
+    let readFromFile filename =
+        File.ReadAllText(filename)
         |> Json.deserializeEx<T> config
+
+    let readFromDefaultFile () = readFromFile defaultFilename
+
+    let getTracksFromDefaultFile () = (readFromDefaultFile ()).Tracks
 
     let writeToFile (playlist: T) =
         let json = Json.serializeEx config playlist
