@@ -24,10 +24,10 @@ let generate (tracks: Track.T array) includeDisclaimer =
             style [] [
                 str
                     """
-                .highlighted {
-                  background-color: palegoldenrod;
-                }
-                """
+                    .highlighted {
+                      background-color: palegoldenrod;
+                    }
+                    """
             ]
         ]
         body [] [

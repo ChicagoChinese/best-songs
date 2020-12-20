@@ -17,10 +17,11 @@ module Template =
                 style [] [
                     rawText
                         """
-                    body {
-                      font-size: 14px;
-                      font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-                    }"""
+                        body {
+                          font-size: 14px;
+                          font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                        }
+                        """
                 ]
             ]
             body [] [

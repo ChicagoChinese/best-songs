@@ -4,6 +4,8 @@ open System.IO
 open Fake.Core
 open FSharp.Json
 
+let outputDir = "output"
+
 let trackLimit = 50
 
 let getCommandOutput command args =

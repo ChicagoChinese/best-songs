@@ -7,7 +7,6 @@ open Prelude
 // https://github.com/feihong/music-tools/blob/master/tasks/convert.py#L47
 
 let assetsDir = "assets"
-let outputDir = "output"
 
 // Don't redirect output so we can see progress of conversion
 let runCommand command args =
