@@ -7,7 +7,7 @@ open Colorful
 
 module H = Hanzidentifier
 
-let checkExcessivNewlines (tracks: Track.T array) =
+let checkExcessiveNewlines (tracks: Track.T array) =
     let tracks =
         [| for track in tracks do
             if track.Lyrics.Contains("\n\n\n") then track |]
@@ -62,6 +62,6 @@ let checkTraditionalTracks (tracks: Track.T array) =
 let main () =
     let tracks = Playlist.getTracksFromDefaultFile ()
 
-    checkExcessivNewlines tracks
+    checkExcessiveNewlines tracks
     checkBadLinks tracks
     checkTraditionalTracks tracks

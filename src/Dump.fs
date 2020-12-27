@@ -26,6 +26,7 @@ let getRawPlaylist playlistName =
 
 let parseLink (text: string) =
     let lines = text.Split "\n"
+
     match lines.Length with
     | 0 -> Link.None
     | _ ->
@@ -40,20 +41,24 @@ let parseLink (text: string) =
 
 let getPlaylist playlistName =
     let p = getRawPlaylist playlistName
+
+
     { Name = p.Name
       Tracks =
           p.Tracks
-          |> Array.map (fun t ->
-              { Location = t.Location
-                Title = t.Name
-                Artist = t.Artist
-                Genre = t.Genre
-                Lyrics = t.Lyrics.Replace('\r', '\n')
-                Link = parseLink t.Comment }: Track.T) }: Playlist.T
+          |> Array.map
+              (fun t ->
+                  { Location = t.Location
+                    Title = t.Name
+                    Artist = t.Artist
+                    Genre = t.Genre
+                    Lyrics = t.Lyrics.Replace('\r', '\n')
+                    Link = parseLink t.Comment }: Track.T) }: Playlist.T
 
 let main playlistName =
     printfn $"Dumping track metadata for playlist '{playlistName}'\n"
 
-    getPlaylist playlistName |> Playlist.writeToFile
+    let playlist = getPlaylist playlistName
+    playlist |> Playlist.writeToFile
 
-    printfn $"Generated {Playlist.defaultFilename}"
+    printfn $"Generated {Playlist.defaultFilename} from {playlist.Name}"
