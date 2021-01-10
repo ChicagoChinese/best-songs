@@ -12,6 +12,8 @@ module Template =
         html [] [
             head [] [
                 meta [ _charset "utf-8" ]
+                meta [ _name "viewport"
+                       _content "width=device-width" ]
                 link [ _href "https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
                        _rel "stylesheet" ]
                 style [] [
